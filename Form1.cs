@@ -15,7 +15,7 @@ public partial class Form1 : Form
         btn1.Click += Btn1_Click;
         
     }
-    async void  Btn1_Click(object sender, EventArgs e)
+    void  Btn1_Click(object sender, EventArgs e)
     {
           
         btn1.Text = "Searching...";
@@ -53,8 +53,7 @@ void searchEan ()
         {
             while (reader.Read())
             {
-                //                   ID                              First name                  Last Name                    Address
-                //Console.WriteLine(reader.GetString(0) + " - "  + reader.GetString(2) + " - " + reader.GetString(3)+ " -" + reader.GetString(4));
+                
                 float f1 = float. Parse(reader.GetString(2));
                 GetCodes(reader.GetString(4), f1);
                 label3.Text = reader.GetString(0)+" - " + reader.GetString(1) + " - " + reader.GetString(2)+ " €" ;
@@ -105,11 +104,10 @@ async void GetCodes (string ean, float price)
                                 //Now log your data object in the console
                               JToken? jToken = JObject.Parse(data)["products"][0]["stores"];
                               int length = jToken.Count();
-                              // Console.WriteLine("Length: " + length);
+                             
                               for (int i = 0; i < length; i++)
                               {
-                                //Console.WriteLine(data);
-                                //JToken? jToken = JObject.Parse(data)["products"][0]["stores"][i]["price"];
+                                
                                 
                                
                                JToken? jToken2 = JObject.Parse(data)["products"][0]["stores"][i];
@@ -124,13 +122,9 @@ async void GetCodes (string ean, float price)
                                else{richTextBox1.SelectionColor = Color.Green;}
 
 
-                              // label1.Text +=country +"     " +JObject.Parse(data)["products"][0]["stores"][i]["name"]+"  "+priceStore+ "€ -DIF :  "+Math.Round(dif,2)+"€\n";
                                richTextBox1.AppendText(country +"     " +JObject.Parse(data)["products"][0]["stores"][i]["name"]+"  "+priceStore+ "€ -DIF :  "+Math.Round(dif,2)+"€\n");
-                               //richTextBox1.Text +=country +"     " +JObject.Parse(data)["products"][0]["stores"][i]["name"]+"  "+priceStore+ "€ -DIF :  "+Math.Round(dif,2)+"€\n";
                             }else{
-                            //label1.Text +=country +"     " +JObject.Parse(data)["products"][0]["stores"][i]["name"]+"  "+priceStore+"\n";
                             richTextBox1.AppendText(country +"     " +JObject.Parse(data)["products"][0]["stores"][i]["name"]+"  "+priceStore+"\n");
-                            //richTextBox1.Text +=country +"     " +JObject.Parse(data)["products"][0]["stores"][i]["name"]+"  "+priceStore+"\n";
                             }
 
 
