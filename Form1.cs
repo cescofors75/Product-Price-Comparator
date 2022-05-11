@@ -112,6 +112,9 @@ async void GetCodes (string ean, float price)
                               JToken jToken = JObject.Parse(data)["products"][0]["stores"];
                               int length = jToken.Count();
                              
+
+                            
+
                               for (int i = 0; i < length; i++)
                               {
                                 

@@ -63,10 +63,23 @@ partial class Form1
                                //JToken jToken2 = JObject.Parse(data)["products"][0]["stores"][i];
                                String EUR = jToken["EUR"].ToString();
                                String GBP = jToken["GBP"].ToString();
+                               String USD = jToken["USD"].ToString();
+                               String CAD = jToken["CAD"].ToString();
+                               String AUD = jToken["AUD"].ToString();
+                               String NOK = jToken["NOK"].ToString();
+                               String SEK = jToken["SEK"].ToString();
+
                                  float f1 = float. Parse(EUR);
                                  label4.Text = "Currency \n\n";
-                                 label4.Text += "1 EUR: "+f1.ToString()+"€\n";
-                                 label4.Text += "1 GBP: "+GBP+"€\n";
+                                 label4.Text += "EUR:   "+f1.ToString()+"€\n";
+                                 label4.Text += "GBP:   "+GBP+"£\n";
+                                 label4.Text += "USD:   "+USD+"$\n";
+                                 label4.Text += "CAD:   "+CAD+"$\n";
+                                 label4.Text += "AUD:   "+AUD+"$\n";
+                                 label4.Text += "NOK:   "+NOK+"K\n";
+                                 label4.Text += "SEK:   "+SEK+"K\n";
+
+
 
 
                              
@@ -98,7 +111,7 @@ partial class Form1
         this.Text = "Form1";
 
         Font font = new Font("Arial", 12);
-        
+
         btn1 = new Button();
         btn1.Text = "Search";
         btn1.Name = "btn1";
