@@ -9,6 +9,8 @@ public partial class Form1 : Form
     
     public Form1()
     {
+         Image myimage = new Bitmap(@".\images\fondo.jpg");
+        this.BackgroundImage = myimage;
         InitializeComponent();
         btn1.Click += Btn1_Click;
         
