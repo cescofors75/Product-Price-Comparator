@@ -2,6 +2,7 @@
 
 using Newtonsoft.Json.Linq;
 using MySql.Data.MySqlClient;
+
 namespace miproyecto3;
   
 public partial class Form1 : Form
@@ -9,9 +10,10 @@ public partial class Form1 : Form
     
     public Form1()
     {
-         Image myimage = new Bitmap(@".\images\fondo.jpg");
+        Image myimage = new Bitmap(@".\images\fondo.jpg");
         this.BackgroundImage = myimage;
         InitializeComponent();
+        SearchCurrency();
         btn1.Click += Btn1_Click;
         
     }
@@ -26,7 +28,13 @@ public partial class Form1 : Form
        
     }
 
-void searchEan () 
+
+
+
+
+
+
+ void searchEan () 
 {
 
     string reference = textBox1.Text;
@@ -76,7 +84,6 @@ void searchEan ()
      
 }
 
-
 async void GetCodes (string ean, float price)
 { 
     //string ean=textBox1.Text;
@@ -102,7 +109,7 @@ async void GetCodes (string ean, float price)
                             if (content != null)
                             {
                                 //Now log your data object in the console
-                              JToken? jToken = JObject.Parse(data)["products"][0]["stores"];
+                              JToken jToken = JObject.Parse(data)["products"][0]["stores"];
                               int length = jToken.Count();
                              
                               for (int i = 0; i < length; i++)
@@ -110,10 +117,10 @@ async void GetCodes (string ean, float price)
                                 
                                 
                                
-                               JToken? jToken2 = JObject.Parse(data)["products"][0]["stores"][i];
-                               String? country = jToken2["country"].ToString();
-                               String? priceStore = jToken2["price"].ToString();
-                               String? priceStore2 = priceStore.Replace(".", ",");
+                               JToken jToken2 = JObject.Parse(data)["products"][0]["stores"][i];
+                               String country = jToken2["country"].ToString();
+                               String priceStore = jToken2["price"].ToString();
+                               String priceStore2 = priceStore.Replace(".", ",");
                                float f1 = float. Parse(priceStore2);
                             if (country == "EU")
                             {
@@ -147,6 +154,4 @@ async void GetCodes (string ean, float price)
                // Console.WriteLine(exception);
             }
          }
-
-
 }
