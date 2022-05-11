@@ -17,6 +17,8 @@ public partial class Form1 : Form
     {
           
         btn1.Text = "Clicked";
+        //label1.Text = "";
+        richTextBox1.Text = "";
         searchEan ();
        
     }
@@ -50,7 +52,9 @@ void searchEan ()
             {
                 //                   ID                              First name                  Last Name                    Address
                 //Console.WriteLine(reader.GetString(0) + " - "  + reader.GetString(2) + " - " + reader.GetString(3)+ " -" + reader.GetString(4));
-                GetCodes(reader.GetString(4));
+                float f1 = float. Parse(reader.GetString(2));
+                GetCodes(reader.GetString(4), f1);
+                label3.Text = reader.GetString(0)+" - " + reader.GetString(1) + " - " + reader.GetString(2)+ " €" ;
                 // Ejemplo para mostrar en el listView1 :
                 //string[] row = { reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3) };
                 //var listViewItem = new ListViewItem(row);
@@ -74,7 +78,7 @@ void searchEan ()
 }
 
 
-async void GetCodes (string ean)
+async void GetCodes (string ean, float price)
 { 
     //string ean=textBox1.Text;
         string api_key = "l1sb4dr7rnng4ftxp41smz54soubg2";
@@ -99,8 +103,8 @@ async void GetCodes (string ean)
                             if (content != null)
                             {
                                 //Now log your data object in the console
-                             
-                              int length = 5;
+                              JToken? jToken = JObject.Parse(data)["products"][0]["stores"];
+                              int length = jToken.Count();
                               // Console.WriteLine("Length: " + length);
                               for (int i = 0; i < length; i++)
                               {
@@ -110,26 +114,29 @@ async void GetCodes (string ean)
                                
                                JToken? jToken2 = JObject.Parse(data)["products"][0]["stores"][i];
                                String? country = jToken2["country"].ToString();
-                               String? price = jToken2["price"].ToString();
+                               String? priceStore = jToken2["price"].ToString();
+                               String? priceStore2 = priceStore.Replace(".", ",");
+                               float f1 = float. Parse(priceStore2);
+                            if (country == "EU")
+                            {
+                               float dif=f1-price;
+                               if (dif<0){richTextBox1.SelectionColor = Color.Red;}
+                               else{richTextBox1.SelectionColor = Color.Green;}
 
-                            
-                            label1.Text +=country +"     " +JObject.Parse(data)["products"][0]["stores"][i]["name"]+"  "+price+"\n";
-                               
+
+                              // label1.Text +=country +"     " +JObject.Parse(data)["products"][0]["stores"][i]["name"]+"  "+priceStore+ "€ -DIF :  "+Math.Round(dif,2)+"€\n";
+                               richTextBox1.AppendText(country +"     " +JObject.Parse(data)["products"][0]["stores"][i]["name"]+"  "+priceStore+ "€ -DIF :  "+Math.Round(dif,2)+"€\n");
+                               //richTextBox1.Text +=country +"     " +JObject.Parse(data)["products"][0]["stores"][i]["name"]+"  "+priceStore+ "€ -DIF :  "+Math.Round(dif,2)+"€\n";
+                            }else{
+                            //label1.Text +=country +"     " +JObject.Parse(data)["products"][0]["stores"][i]["name"]+"  "+priceStore+"\n";
+                            richTextBox1.AppendText(country +"     " +JObject.Parse(data)["products"][0]["stores"][i]["name"]+"  "+priceStore+"\n");
+                            //richTextBox1.Text +=country +"     " +JObject.Parse(data)["products"][0]["stores"][i]["name"]+"  "+priceStore+"\n";
+                            }
 
 
-                              //Console.WriteLine(JObject.Parse(data)["products"][0]["stores"][i]["name"]);
-                               //Console.WriteLine(JObject.Parse(data)["products"][0]["stores"][i]["country"]);
-                                //Console.Write(JObject.Parse(data)["products"][0]["stores"][i]["price"]);
-                                 //Console.WriteLine( JObject.Parse(data)["products"][0]["stores"][i]["currency_symbol"]);
+                             
                               }
-                              //Console.WriteLine("data------------{0}", data);
-
-                             /*   JObject jsonObject = JObject.Parse(data);
-//int userId = int.Parse(jsonObject["userId"].ToString());
-//int id = int.Parse(jsonObject["id"].ToString());
-//string title = jsonObject["title"].ToString();
-//bool completed = bool.Parse(jsonObject["completed"].ToString());
-                                 Console.WriteLine(jsonObject["results"][0]["description"].ToString());*/
+             
 
                             }
                             else
