@@ -16,10 +16,11 @@ public partial class Form1 : Form
     async void  Btn1_Click(object sender, EventArgs e)
     {
           
-        btn1.Text = "Clicked";
+        btn1.Text = "Searching...";
         //label1.Text = "";
         richTextBox1.Text = "";
         searchEan ();
+        btn1.Text = "Search";
        
     }
 
@@ -55,10 +56,7 @@ void searchEan ()
                 float f1 = float. Parse(reader.GetString(2));
                 GetCodes(reader.GetString(4), f1);
                 label3.Text = reader.GetString(0)+" - " + reader.GetString(1) + " - " + reader.GetString(2)+ " €" ;
-                // Ejemplo para mostrar en el listView1 :
-                //string[] row = { reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3) };
-                //var listViewItem = new ListViewItem(row);
-                //listView1.Items.Add(listViewItem);
+                
             }
         }
         else
@@ -83,7 +81,7 @@ async void GetCodes (string ean, float price)
     //string ean=textBox1.Text;
         string api_key = "l1sb4dr7rnng4ftxp41smz54soubg2";
             //Define your baseUrl
-            //string baseUrl = "http://pokeapi.co/api/v2/pokemon/";
+            
             string baseUrl = "https://api.barcodelookup.com/v3/products?barcode="+ean+"&formatted=y&key="+api_key;
             //Have your using statements within a try/catch block
             try
